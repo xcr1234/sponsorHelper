@@ -12,7 +12,7 @@ proxy=''
 
 [sponsor]
 api='https://bsbsb.top'
-# 插件中的私人用户ID
+# 插件中的私人用户ID，参数说明查看https://github.com/hanydd/BilibiliSponsorBlock/wiki/API
 private_id='...'
 # 提交使用的userAgent
 user_agent='github.com/xcr1234/sponsorHelper/1.0.0'
