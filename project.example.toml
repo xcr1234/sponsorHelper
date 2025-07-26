@@ -1,14 +1,26 @@
 [gemini]
 # 参考https://blog.csdn.net/qq_63137016/article/details/149062796申请，每个人可以白嫖5个项目的key
-api_key_list = []
+api_key_list = [
+    '...'
+]
 
 # 使用的模型，推荐用 gemini-2.5-pro，如果觉得耗费高，也可以用gemini-2.5-flash
 model='gemini-2.5-pro'
 
+#是否需要使用代理，可以用http代理上传
+proxy=''
 
 [sponsor]
 api='https://bsbsb.top'
 # 插件中的私人用户ID
-private_id='<your_private_user_id>'
+private_id='...'
 # 提交使用的userAgent
-user_agent='test/1.0.0'
+user_agent='github.com/xcr1234/sponsorHelper/1.0.0'
+
+
+[running]
+# 处理视频的最小时长（秒），建议保留默认
+min_second=60
+# 处理视频的最大时长（秒），建议保留默认
+max_second=1800
+
