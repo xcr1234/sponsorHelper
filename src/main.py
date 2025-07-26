@@ -7,7 +7,7 @@ from src.process_ad import process_video
 from src.utils import is_near
 
 
-async def run_once():
+async def run_per_loop():
     if not await is_valid():
         logger.info('credential无效，需要二维码登录获取新的凭证')
         if not await qr_login():
