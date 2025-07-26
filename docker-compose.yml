@@ -1,0 +1,16 @@
+services:
+  app:
+    container_name: bad_helper
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    volumes:
+      - .:/app       # 将本地代码挂载到容器中，方便开发时实时更新
+    environment:
+      - TZ=Asia/Shanghai
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m" # 每个日志文件最大 10MB
+        max-file: "3"  # 最多保留 3 个日志文件
