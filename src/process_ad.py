@@ -119,6 +119,8 @@ endTime: 0
 
     k = ad_result.model_dump()
     k.update(payload)
+    k['userID'] = '******'
+    k['res'] = res.text
 
     insert_commit(video_id, k, up_id, up_name)
 
