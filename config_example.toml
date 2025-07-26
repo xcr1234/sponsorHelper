@@ -1,0 +1,14 @@
+[gemini]
+# 参考https://blog.csdn.net/qq_63137016/article/details/149062796申请，每个人可以白嫖5个项目的key
+api_key_list = []
+
+# 使用的模型，推荐用 gemini-2.5-pro，如果觉得耗费高，也可以用gemini-2.5-flash
+model='gemini-2.5-pro'
+
+
+[sponsor]
+api='https://bsbsb.top'
+# 插件中的私人用户ID
+private_id='<your_private_user_id>'
+# 提交使用的userAgent
+user_agent='test/1.0.0'
