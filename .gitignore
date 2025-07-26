@@ -137,6 +137,7 @@ env.bak/
 venv.bak/
 project.toml
 credential.json
+data.db
 
 # Spyder project settings
 .spyderproject
