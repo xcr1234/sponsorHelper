@@ -88,7 +88,7 @@ endTime: 0
 
     if not ad_result.haveAd:
         logger.info('no ad found')
-
+        insert_commit(video_id, ad_result.model_dump(), up_id, up_name)
         return
 
     if await check_exist(video_id):
