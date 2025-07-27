@@ -2,7 +2,7 @@
 FROM alpine:latest
 
 # 1. 安装 cron 和 find 工具
-RUN apk add --no-cache cron
+RUN apk add --no-cache dcron
 
 # 2. 复制 cron 任务文件
 COPY my-cron-job /etc/cron.d/my-cron-job
