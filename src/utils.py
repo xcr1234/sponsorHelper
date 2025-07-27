@@ -22,7 +22,7 @@ def is_near(item):
     time_diff = (now_shanghai - pub_time).total_seconds()
 
     # 检查是否是新发布的视频，并预留一点缓冲时间
-    return time_diff < 1.5 * 30
+    return time_diff < 1.5 * 30 * 60
 
 async def download_video(url):
     with tempfile.NamedTemporaryFile(delete=False, suffix='.mp4') as f:
