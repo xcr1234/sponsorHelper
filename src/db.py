@@ -1,3 +1,4 @@
+import datetime
 import json
 import os.path
 import sqlite3
@@ -10,8 +11,10 @@ def commit_exists(bvid: str):
         return c.fetchone() is not None
 
 def insert_commit(bvid: str, data: any, up_id: int, up_name: str):
+    tz_shanghai = datetime.timezone(datetime.timedelta(hours=8))
+    commit_time = datetime.datetime.now(tz_shanghai).strftime('%Y-%m-%d %H:%M:%S')
     with sqlite3.connect(db_file) as conn:
-        conn.execute('insert into commit_history (bvid, json_data,up_id, up_name) values (?, ?, ?, ?)', (bvid, json.dumps(data,ensure_ascii=False), up_id, up_name))
+        conn.execute('insert into commit_history (bvid, json_data,up_id, up_name,commit_time) values (?, ?, ?, ?, ?)', (bvid, json.dumps(data,ensure_ascii=False), up_id, up_name,commit_time))
 
 
 def init():
@@ -23,5 +26,6 @@ def init():
                              bvid      text,
                              json_data TEXT,
                              up_id     integer,
-                             up_name   text
+                             up_name   text,
+                             commit_time text
                          )""")
