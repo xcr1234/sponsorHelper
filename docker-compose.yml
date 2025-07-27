@@ -7,6 +7,7 @@ services:
     restart: unless-stopped
     volumes:
       - .:/app       # 将本地代码挂载到容器中，方便开发时实时更新
+      - temp:/tmp    # 挂载temp
     environment:
       - TZ=Asia/Shanghai
     logging:
@@ -14,3 +15,22 @@ services:
       options:
         max-size: "10m" # 每个日志文件最大 10MB
         max-file: "3"  # 最多保留 3 个日志文件
+
+
+  cleaner:
+    build: ./cleaner
+    container_name: bad_helper_cleaner
+    volumes:
+        # 将同一个命名卷挂载到 cleaner 容器，但路径可以不同
+      - temp:/tmp
+    restart: always # 确保 cleaner 服务一直运行
+    environment:
+      - TZ=Asia/Shanghai
+    logging:
+        driver: "json-file"
+        options:
+          max-size: "5m"
+          max-file: "2"
+
+volumes:
+  temp:

@@ -12,7 +12,7 @@ data.db文件，sqlite数据库存储所有标注过的视频
 
 # 容器启动
 
-推荐使用容器启动
+推荐使用容器启动，会自动清理/tmp下载的视频文件
 
 1.将文件project.example.toml复制成project.toml，然后修改其中的配置
 
