@@ -17,3 +17,7 @@ data.db文件，sqlite数据库存储所有标注过的视频
 1.将文件project.example.toml复制成project.toml，然后修改其中的配置
 
 2.执行`docker compose up -d --build`
+
+# 关于账号
+
+建议用小号，并且登录本服务之后就不要再进行任何操作!
