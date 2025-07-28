@@ -31,4 +31,7 @@ async def run_per_loop():
         user_id = video['modules']['module_author']['mid']
         up_name = video['modules']['module_author']['name']
 
-        await process_video(video_id, user_id, up_name)
+        try:
+            await process_video(video_id, user_id, up_name)
+        except Exception as e:
+            logger.exception(f'处理视频{video_id}出错： {e}')
