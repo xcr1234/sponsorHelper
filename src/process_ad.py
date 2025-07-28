@@ -100,7 +100,7 @@ endTime: 0
     duration = video_info['pages'][0]['duration']
 
     if (ad_result.endTime - ad_result.beginTime) > 0.8 *  duration:
-        raise ValueError('Total length over 80% of the video')
+        raise Exception('Total length over 80% of the video')
 
     payload =  {
         'videoID': video_id,
@@ -120,7 +120,7 @@ endTime: 0
     res = await http_client.post(f'{sponsor_conf['api']}/api/skipSegments', json=payload)
 
     if not res.is_success:
-        logger.error(f'提交片段失败 {res.text}')
+        raise Exception(f'提交片段失败 {res.text}')
 
     logger.info(f'提交片段成功 {res.text}')
 
