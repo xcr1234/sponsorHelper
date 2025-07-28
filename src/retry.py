@@ -19,7 +19,7 @@ def retry(max_retries: int = 1, delay: float = 1.0):
                     return await func(*args, **kwargs)
                 except Exception as e:
                     if attempt < max_retries:
-                        logger.warning(f"Error {str(e)} . Attempt {attempt + 1} failed. Retrying in {delay} seconds...")
+                        logger.warning(f"Error {repr(e)} . Attempt {attempt + 1} failed. Retrying in {delay} seconds...")
                         await asyncio.sleep(delay)
                     else:
                         logger.error(f"Attempt {attempt + 1} failed. No more retries.")
