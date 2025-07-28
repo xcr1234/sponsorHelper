@@ -10,6 +10,7 @@ from pydantic import BaseModel
 
 from src.config import sponsor_conf, get_google_client, running_conf, gemini_conf
 from src.db import commit_exists, insert_commit
+from src.retry import retry
 
 http_client = httpx.AsyncClient()
 
@@ -31,6 +32,7 @@ class AdModel(BaseModel):
     beginTime: int
     endTime: int
 
+@retry(delay=10)
 async def process_video(video_id: str, up_id: int, up_name: str):
     logger.info(f'video id: {video_id}')
     if await check_exist(video_id):
