@@ -1,12 +1,13 @@
 import asyncio
 import json
 import os.path
+from typing import Optional
 
 from bilibili_api import Credential, login_v2
 from bilibili_api.login_v2 import QrCodeLoginEvents
 from loguru import logger
 
-credential: Credential | None = None
+credential: Optional[Credential]
 
 def get_credential() -> Credential:
     if credential is None:
@@ -84,3 +85,14 @@ async def qr_login():
             save_credential()
 
             return True
+
+async def validate() -> Optional[Credential]:
+    if not await is_valid():
+        logger.info('credential无效，需要二维码登录获取新的凭证')
+        if not await qr_login():
+            return None
+    elif credential.ac_time_value and await credential.check_refresh():
+        logger.info('凭证已过期，刷新凭证')
+        await refresh_credential()
+
+    return credential

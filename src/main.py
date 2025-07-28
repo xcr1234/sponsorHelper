@@ -2,22 +2,17 @@ from bilibili_api import dynamic
 from bilibili_api.dynamic import DynamicType
 from loguru import logger
 
-from src.credential import get_credential, is_valid, refresh_credential, qr_login
+from src.credential import validate
 from src.process_ad import process_video
 from src.utils import is_near
 
 
 async def run_per_loop():
-    if not await is_valid():
-        logger.info('credential无效，需要二维码登录获取新的凭证')
-        if not await qr_login():
-            return
-    elif get_credential().ac_time_value and await get_credential().check_refresh():
-        logger.info('凭证已过期，刷新凭证')
-        await refresh_credential()
-
+    credential = await validate()
+    if not credential:
+        return
     # 处理视频广告逻辑  拉取自己的动态
-    result = await dynamic.get_dynamic_page_info(get_credential(), DynamicType.VIDEO)
+    result = await dynamic.get_dynamic_page_info(credential, DynamicType.VIDEO)
 
     items = result['items']
 
