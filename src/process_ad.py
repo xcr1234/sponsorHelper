@@ -97,6 +97,11 @@ endTime: 0
         logger.info(f'it has been processed, skip')
         return
 
+    duration = video_info['pages'][0]['duration']
+
+    if (ad_result.endTime - ad_result.beginTime) > 0.8 *  duration:
+        raise ValueError('Total length over 80% of the video')
+
     payload =  {
         'videoID': video_id,
         'userID': sponsor_conf['private_id'],
