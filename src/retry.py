@@ -3,7 +3,7 @@ from functools import wraps
 
 from loguru import logger
 
-class RetryOverException(BaseException):
+class RetryOverException(Exception):
      pass
 
 def retry(max_retries: int = 1, delay: float = 1.0):
