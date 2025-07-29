@@ -3,6 +3,8 @@ from functools import wraps
 
 from loguru import logger
 
+class RetryOverException(BaseException):
+     pass
 
 def retry(max_retries: int = 1, delay: float = 1.0):
     """
@@ -17,13 +19,14 @@ def retry(max_retries: int = 1, delay: float = 1.0):
             for attempt in range(max_retries + 1):
                 try:
                     return await func(*args, **kwargs)
+                except RetryOverException:
+                    raise
                 except Exception as e:
                     if attempt < max_retries:
                         logger.warning(f"Error {repr(e)} . Attempt {attempt + 1} failed. Retrying in {delay} seconds...")
                         await asyncio.sleep(delay)
                     else:
-                        logger.error(f"Attempt {attempt + 1} failed. No more retries.")
-                        raise e
+                        raise RetryOverException("Attempt {attempt + 1} failed. No more retries.") from e
             return None
 
         return wrapper

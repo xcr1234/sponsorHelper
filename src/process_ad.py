@@ -66,23 +66,7 @@ async def process_video(video_id: str, up_id: int, up_name: str):
 
     logger.info('begin generate content')
 
-    prompt = """
-1.请帮我判断这个视频，判断是否中间是否有与视频内容无关的广告内容，如果是返回
-haveAd: true
-beginTime: 广告的开始时间（秒）
-endTime: 广告的结束时间（秒）
-3.如果不包含广告，则返回
-haveAd: false
-beginTime: 0
-endTime: 0
-"""
-    response = await google_client.aio.models.generate_content(
-        model=gemini_conf['model'], contents=[myfile, prompt],
-        config=types.GenerateContentConfig(
-            response_mime_type='application/json',
-            response_schema=AdModel
-        )
-    )
+    response = await google_gen_response(google_client, myfile)
 
     logger.info(response.text)
 
@@ -130,6 +114,28 @@ endTime: 0
     k['res'] = res.text
 
     insert_commit(video_id, k, up_id, up_name)
+
+# AI生成失败，直接等待30秒重试
+@retry(delay=30, max_retries=2)
+async def google_gen_response(google_client, myfile):
+    prompt = """
+1.请帮我判断这个视频，判断是否中间是否有与视频内容无关的广告内容，如果是返回
+haveAd: true
+beginTime: 广告的开始时间（秒）
+endTime: 广告的结束时间（秒）
+3.如果不包含广告，则返回
+haveAd: false
+beginTime: 0
+endTime: 0
+"""
+    response = await google_client.aio.models.generate_content(
+        model=gemini_conf['model'], contents=[myfile, prompt],
+        config=types.GenerateContentConfig(
+            response_mime_type='application/json',
+            response_schema=AdModel
+        )
+    )
+    return response
 
 
 async def download_file(video_id: str, video_info):
