@@ -1,4 +1,4 @@
 # 每天凌晨3点，删除/tmp目录下超过7天的文件
-0 3 * * * find /tmp -type f -mtime +7 -delete >> /var/log/cron.log 2>&1
+0 3 * * * find /tmp -type f -mtime +3 -delete >> /var/log/cron.log 2>&1
 
 # 文件末尾必须有空行！
