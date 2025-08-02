@@ -1,5 +1,5 @@
 # 使用官方 Python 基础镜像
-FROM python:3.12
+FROM python:3.12-slim
 
 
 # 设置工作目录
