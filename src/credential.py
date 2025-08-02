@@ -7,6 +7,8 @@ from bilibili_api import Credential, login_v2
 from bilibili_api.login_v2 import QrCodeLoginEvents
 from loguru import logger
 
+from src.utils import get_now_str
+
 credential: Optional[Credential]
 
 def get_credential() -> Credential:
@@ -44,7 +46,8 @@ def save_credential():
         f.write(json.dumps({
             'sessdata': credential.sessdata,
             'bili_jct': credential.bili_jct,
-            'ac_time_value': credential.ac_time_value
+            'ac_time_value': credential.ac_time_value,
+            'update_time': get_now_str()
         }))
 
 async def refresh_credential():

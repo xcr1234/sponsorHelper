@@ -31,3 +31,7 @@ async def download_video(url):
             async for chunk in response.aiter_bytes():
                 f.write(chunk)
         return f.name
+
+def get_now_str():
+    tz_shanghai = datetime.timezone(datetime.timedelta(hours=8))
+    return datetime.datetime.now(tz_shanghai).strftime('%Y-%m-%d %H:%M:%S')
