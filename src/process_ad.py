@@ -11,6 +11,7 @@ from pydantic import BaseModel
 from src.config import sponsor_conf, get_google_client, running_conf, gemini_conf
 from src.db import commit_exists, insert_commit
 from src.retry import retry
+from src.utils import SensitiveString
 
 http_client = httpx.AsyncClient()
 
@@ -88,8 +89,8 @@ async def process_video(video_id: str, up_id: int, up_name: str):
 
     payload =  {
         'videoID': video_id,
-        'userID': sponsor_conf['private_id'],
-        'userAgent': sponsor_conf['user_agent'],
+        'userID': SensitiveString(sponsor_conf['private_id']),
+        'userAgent': SensitiveString(sponsor_conf['user_agent']),
         'videoDuration': video_info['pages'][0]['duration'],
         'segments': [
             {

@@ -35,3 +35,10 @@ async def download_video(url):
 def get_now_str():
     tz_shanghai = datetime.timezone(datetime.timedelta(hours=8))
     return datetime.datetime.now(tz_shanghai).strftime('%Y-%m-%d %H:%M:%S')
+
+
+# 让我们的类继承自 str
+class SensitiveString(str):
+    # 重写 __repr__ 用于日志记录/调试输出
+    def __repr__(self):
+        return "'**********'"
