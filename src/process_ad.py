@@ -90,7 +90,7 @@ async def process_video(video_id: str, up_id: int, up_name: str):
     payload =  {
         'videoID': video_id,
         'userID': SensitiveString(sponsor_conf['private_id']),
-        'userAgent': SensitiveString(sponsor_conf['user_agent']),
+        'userAgent': sponsor_conf['user_agent'],
         'videoDuration': video_info['pages'][0]['duration'],
         'segments': [
             {
