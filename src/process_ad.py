@@ -136,6 +136,8 @@ endTime: 0
             response_schema=AdModel
         )
     )
+    if response.parsed is None:
+        raise Exception('Google API returned None')
     return response
 
 
