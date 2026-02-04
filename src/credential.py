@@ -9,7 +9,7 @@ from loguru import logger
 
 from src.utils import get_now_str
 
-credential: Optional[Credential]
+credential: Optional[Credential] = None
 
 def get_credential() -> Credential:
     if credential is None:
