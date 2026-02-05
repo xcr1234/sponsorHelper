@@ -11,7 +11,7 @@ from src.config import conf, ass_conf
 from src.credential import validate
 from src.db import insert_commit
 from src.process_ad import check_exist
-
+from src.retry import retry
 
 
 async def get_subtitle_body(subtitle_data):
@@ -102,7 +102,7 @@ async def detect_ads_with_llm(title, subtitle_body):
     return json_repair.loads(response.choices[0].message.content)
 
 http_client = httpx.AsyncClient()
-
+@retry(delay=10)
 async def process_video_ass(video_id: str, up_id: int, up_name: str):
     logger.info(f'video id: {video_id}')
     if await check_exist(video_id):
