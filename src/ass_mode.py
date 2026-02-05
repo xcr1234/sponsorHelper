@@ -134,6 +134,9 @@ async def process_video_ass(video_id: str, up_id: int, up_name: str):
     ad_results = ad_results_llm['segments']
     if not ad_results:
         logger.info("未找到广告内容。")
+        insert_commit(video_id, {
+            'haveAd': False
+        }, up_id, up_name)
         return
     sponsor_conf = conf['sponsor']
     payload = {

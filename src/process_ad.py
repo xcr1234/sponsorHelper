@@ -21,11 +21,12 @@ async def check_exist(video_id : str):
     if found:
         return True
 
-    res = await http_client.get(f'{sponsor_conf['api']}/api/skipSegments?videoID={video_id}&category=sponsor')
+    res = await http_client.get(f'{sponsor_conf['api']}/api/skipSegments?videoID={video_id}&category=sponsor', timeout=30)
     if res.status_code == 404:
         return False
     if res.is_success:
-        return True
+        resp = res.json()
+        return len(resp) > 0
     return False
 
 class AdModel(BaseModel):
