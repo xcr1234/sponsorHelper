@@ -8,7 +8,7 @@ from loguru import logger
 from openai import AsyncOpenAI
 
 from src.config import conf, ass_conf
-from src.credential import validate
+from src.credential import validate, get_credential
 from src.db import insert_commit
 from src.process_ad import check_exist
 from src.retry import retry
@@ -105,7 +105,7 @@ async def process_video_ass(video_id: str, up_id: int, up_name: str):
         return
 
     # 1. 获取视频信息
-    credential = await validate()
+    credential = get_credential()
     v = video.Video(bvid=video_id, credential=credential)
     video_info =  await  v.get_info()
     title = video_info['title']
