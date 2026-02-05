@@ -72,16 +72,11 @@ async def detect_ads_with_llm(title, subtitle_body):
 字幕列表：
 {subtitle_text}
 
-判断要求：
-1. 识别出广告开始的时间戳和结束的时间戳。
-2. 识别广告的具体内容和推销的产品。
-3. 如果没有广告，输出空数组 []。
-
 1. 必须返回一个标准的 JSON 对象，格式如下：
 ```json
 {{
   "segments": [
-    {{ "start": 秒, "end": 秒, "reason": "理由" }}
+    {{ "start": 秒, "end": 秒, "reason": "理由" }}   //识别出广告开始的时间戳和结束的时间戳。
   ]
 }}
 ```
