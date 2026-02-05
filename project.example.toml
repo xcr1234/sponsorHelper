@@ -24,3 +24,10 @@ min_second=60
 # 处理视频的最大时长（秒），建议保留默认
 max_second=1800
 
+
+[ass]
+#使用字幕模式
+
+api_key="sk-..."
+base_url="https://api.siliconflow.cn/v1"
+use_model="deepseek-ai/DeepSeek-V3.2"

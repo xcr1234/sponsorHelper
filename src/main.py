@@ -2,6 +2,7 @@ from bilibili_api import dynamic
 from bilibili_api.dynamic import DynamicType
 from loguru import logger
 
+from src.ass_mode import process_video_ass
 from src.credential import validate
 from src.process_ad import process_video
 from src.utils import is_near
@@ -27,6 +28,6 @@ async def run_per_loop():
         up_name = video['modules']['module_author']['name']
 
         try:
-            await process_video(video_id, user_id, up_name)
+            await process_video_ass(video_id, user_id, up_name)
         except Exception as e:
             logger.exception(f'处理视频{video_id}出错： {e}')

@@ -14,6 +14,7 @@ with open("project.toml", "rb") as f:
 gemini_conf = conf['gemini']
 sponsor_conf = conf['sponsor']
 running_conf = conf['running']
+ass_conf = conf['ass']
 
 def gemini_client(api_key):
     options = types.HttpOptions(
