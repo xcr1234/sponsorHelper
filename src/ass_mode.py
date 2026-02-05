@@ -161,7 +161,8 @@ async def process_video_ass(video_id: str, up_id: int, up_name: str):
     logger.info(f'提交片段成功 {res.text}')
 
     k = {
-        'ad_results': ad_results
+        'ad_results': ad_results,
+        'haveAd': len(ad_results) > 0
     }
     k.update(payload)
     k['userID'] = '******'
