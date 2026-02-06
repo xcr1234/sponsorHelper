@@ -101,9 +101,9 @@ music_offtopic: 音乐:非音乐部分
     # 减少日志打印多行
     logger.debug(f'字幕模式提示词：\n{prompt.replace('\n', '\\n')}')
 
-    response = await create_request(prompt)
+    response_content = await create_request(prompt)
 
-    return json_repair.loads(response.choices[0].message.content)
+    return json_repair.loads(response_content)
 
 http_client = httpx.AsyncClient()
 @retry(delay=10)

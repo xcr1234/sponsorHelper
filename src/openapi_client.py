@@ -14,4 +14,4 @@ async def create_request(prompt: str):
         response_format={"type": "json_object"}
     )
 
-    return response
+    return response.choices[0].message.content
