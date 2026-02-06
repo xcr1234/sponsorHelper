@@ -7,6 +7,7 @@ from bilibili_api import video
 from loguru import logger
 from openai import AsyncOpenAI
 
+from src.action_ass import get_video_analysis
 from src.config import conf, ass_conf
 from src.credential import validate, get_credential
 from src.db import insert_commit
@@ -63,47 +64,7 @@ async def detect_ads_with_llm(title, subtitle_body):
 
     subtitle_text = "\n".join(formatted_subtitles)
 
-    # 2. 构造 Prompt
-    prompt = f"""
-你是一个视频内容分析助手。我会给你一个视频的标题和带有时间戳的字幕内容。
-请判断字幕中是否存在与视频主题无关的插播广告（例如：转转回收、得物推广、游戏App、理财产品等）。
-
-视频标题：{title}
-
-字幕列表：
-{subtitle_text}
-
-1. 必须返回一个标准的 JSON 对象，格式如下：
-```json
-{{
-  "segments": [
-    //识别出广告开始的时间戳和结束的时间戳，和广告类型(actionType)
-    {{ "start": 0, "end": 0, "reason": "理由", "actionType" : "actionType"}}   
-  ]
-}}
-```
-广告类型actionType的取值：
-sponsor: 赞助/恰饭
-selfpromo: 无偿/自我推广
-exclusive_access: 独家访问/抢先体验
-interaction: 三连/互动提醒
-poi_highlight: 精彩时刻/重点
-intro: 过场/开场动画
-outro: 鸣谢/结束画面
-preview: 回顾/概要
-padding: 填充内容/前黑/后黑
-filler: 离题闲聊/玩笑
-music_offtopic: 音乐:非音乐部分
-2. 如果没有任何广告，请返回 {{"segments": []}}。
-3. 只输出 JSON，不要有任何其他解释文字。
-"""
-
-    # 减少日志打印多行
-    logger.debug(f'字幕模式提示词：\n{prompt.replace('\n', '\\n')}')
-
-    response_content = await create_request(prompt)
-
-    return json_repair.loads(response_content)
+    return await get_video_analysis(title, subtitle_text)
 
 http_client = httpx.AsyncClient()
 @retry(delay=10)
