@@ -17,11 +17,11 @@ async def create_request(prompt: str, history=None):
     response = await client.chat.completions.create(
         model=ass_conf['use_model'],
         messages=history,
-        response_format={"type": "json_object"},
         stream=True,  # 开启流式传输
         max_tokens=4096,
         extra_body={
-           "thinking_budget": 16384,
+           "thinking_budget": 4096,
+           "enable_thinking": True,
         },
         temperature=0.6,
         top_p=0.95,
