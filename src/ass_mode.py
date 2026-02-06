@@ -82,6 +82,11 @@ async def process_video_ass(video_id: str, up_id: int, up_name: str):
 
     # 2. 获取字幕
     cid = video_info['pages'][0]['cid']
+    duration = video_info['pages'][0]['duration']
+    if duration >= 600:
+        logger.info(f'视频时长超过10分钟，跳过.')
+        return
+
     raw_subtitle_res = await v.get_subtitle(cid)
 
     # 3. 下载并解析字幕 Body
