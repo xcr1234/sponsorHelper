@@ -125,7 +125,7 @@ async def process_video_ass(video_id: str, up_id: int, up_name: str):
 
     logger.info(f'commit payload: {payload}')
     # 提交片段
-    res = await http_client.post(f'{sponsor_conf['api']}/api/skipSegments', json=payload)
+    res = await http_client.post(f'{sponsor_conf['api']}/api/skipSegments', json=payload, timeout=60)
 
 
     if not res.is_success:
