@@ -67,7 +67,7 @@ async def detect_ads_with_llm(title, subtitle_body):
     return await get_video_analysis(title, subtitle_text)
 
 http_client = httpx.AsyncClient()
-@retry(delay=10)
+@retry(delay=30)
 async def process_video_ass(video_id: str, up_id: int, up_name: str):
     logger.info(f'video id: {video_id}')
     if await check_exist(video_id):

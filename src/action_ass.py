@@ -71,6 +71,7 @@ async def get_video_analysis(title: str, subtitle_text: str):
     # --- 第一次尝试 ---
     response_content = await create_request(prompt, history=history)
 
+    logger.debug(f"第一次尝试，返回： {response_content}")
 
     validated_res = None
     try:
