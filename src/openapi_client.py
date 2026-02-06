@@ -1,3 +1,4 @@
+from loguru import logger
 from openai import AsyncOpenAI
 
 from src.config import conf
@@ -11,7 +12,19 @@ async def create_request(prompt: str):
         messages=[
             {"role": "user", "content": prompt}
         ],
-        response_format={"type": "json_object"}
+        response_format={"type": "json_object"},
+        stream=False,
+        max_tokens=4096,
+        extra_body={
+            "thinking_budget": 1024
+        },
+        temperature=0.6,
+        top_p=0.95,
+        enable_thinking=True
     )
+
+    reasoning_content = response.choices[0].message.reasoning_content
+
+    logger.debug(f'reasoning_content:\n{reasoning_content}')
 
     return response.choices[0].message.content
