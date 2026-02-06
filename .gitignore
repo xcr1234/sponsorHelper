@@ -178,3 +178,5 @@ cython_debug/
 
 .idea/
 *.iml
+
+src/openapi_client.py
