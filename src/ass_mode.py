@@ -96,7 +96,9 @@ music_offtopic: 音乐:非音乐部分
 2. 如果没有任何广告，请返回 {{"segments": []}}。
 3. 只输出 JSON，不要有任何其他解释文字。
 """
-    logger.debug(f'字幕模式提示词：\n{prompt}')
+
+    # 减少日志打印多行
+    logger.debug(f'字幕模式提示词：\n{prompt.replace('\n', '\\n')}')
 
     response = await client.chat.completions.create(
         model=ass_conf['use_model'],
