@@ -76,10 +76,23 @@ async def detect_ads_with_llm(title, subtitle_body):
 ```json
 {{
   "segments": [
-    {{ "start": 秒, "end": 秒, "reason": "理由" }}   //识别出广告开始的时间戳和结束的时间戳。
+    //识别出广告开始的时间戳和结束的时间戳，和广告类型(actionType)
+    {{ "start": 秒, "end": 秒, "reason": "理由", "actionType" : "actionType"}}   
   ]
 }}
 ```
+广告类型actionType的取值：
+sponsor: 赞助/恰饭
+selfpromo: 无偿/自我推广
+exclusive_access: 独家访问/抢先体验
+interaction: 三连/互动提醒
+poi_highlight: 精彩时刻/重点
+intro: 过场/开场动画
+outro: 鸣谢/结束画面
+preview: 回顾/概要
+padding: 填充内容/前黑/后黑
+filler: 离题闲聊/玩笑
+music_offtopic: 音乐:非音乐部分
 2. 如果没有任何广告，请返回 {{"segments": []}}。
 3. 只输出 JSON，不要有任何其他解释文字。
 """
@@ -143,7 +156,7 @@ async def process_video_ass(video_id: str, up_id: int, up_name: str):
             {
                 'segment': [seg['start'], seg['end']], # 映射 AI 的识别结果
                 'category': 'sponsor',
-                'actionType': 'skip'
+                'actionType': seg['actionType']
             } for seg in ad_results
         ]
     }
