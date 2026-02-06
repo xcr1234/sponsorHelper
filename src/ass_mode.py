@@ -78,7 +78,7 @@ async def detect_ads_with_llm(title, subtitle_body):
 {{
   "segments": [
     //识别出广告开始的时间戳和结束的时间戳，和广告类型(actionType)
-    {{ "start": 秒, "end": 秒, "reason": "理由", "actionType" : "actionType"}}   
+    {{ "start": 0, "end": 0, "reason": "理由", "actionType" : "actionType"}}   
   ]
 }}
 ```
@@ -156,6 +156,11 @@ async def process_video_ass(video_id: str, up_id: int, up_name: str):
             } for seg in ad_results
         ]
     }
+
+    # 提交之前再确认一下
+    if await check_exist(video_id):
+        logger.info(f'视频已经处理过了，跳过.')
+        return
 
     logger.info(f'commit payload: {payload}')
     # 提交片段
