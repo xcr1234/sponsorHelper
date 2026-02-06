@@ -10,6 +10,7 @@ from openai import AsyncOpenAI
 from src.config import conf, ass_conf
 from src.credential import validate, get_credential
 from src.db import insert_commit
+from src.openapi_client import create_request
 from src.process_ad import check_exist
 from src.retry import retry
 
@@ -100,14 +101,7 @@ music_offtopic: 音乐:非音乐部分
     # 减少日志打印多行
     logger.debug(f'字幕模式提示词：\n{prompt.replace('\n', '\\n')}')
 
-    response = await client.chat.completions.create(
-        model=ass_conf['use_model'],
-        messages=[
-            {"role": "system", "content": "你是一个专业的视频广告识别专家。请仅返回 JSON 内容。"},
-            {"role": "user", "content": prompt}
-        ],
-        response_format={"type": "json_object"}
-    )
+    response = await create_request(prompt)
 
     return json_repair.loads(response.choices[0].message.content)
 
