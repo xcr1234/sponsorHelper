@@ -16,11 +16,11 @@ async def create_request(prompt: str):
         stream=False,
         max_tokens=4096,
         extra_body={
-            "thinking_budget": 1024
+            "thinking_budget": 1024,
+            'enable_thinking':True,
         },
         temperature=0.6,
         top_p=0.95,
-        enable_thinking=True
     )
 
     reasoning_content = response.choices[0].message.reasoning_content
